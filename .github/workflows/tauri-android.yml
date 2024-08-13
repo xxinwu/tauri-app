@@ -47,11 +47,15 @@ jobs:
           NDK_HOME="$ANDROID_SDK_ROOT/android-ndk-r25b"
           echo "NDK_HOME=$NDK_HOME" >>$GITHUB_ENV
 
-#      - name: Clean Cargo Cache
-#        run: cargo clean
+      - name: Clean Cargo Cache
+        run: |
+          cd src-tauri  # Navigate to the directory containing Cargo.toml
+          cargo clean
 
       - name: Update libc dependency
-        run: cargo update -p libc
+        run: |
+          cd src-tauri  # Navigate to the directory containing Cargo.toml
+          cargo update -p libc
 
       - name: Install Android SDK
         run: |
