@@ -47,6 +47,9 @@ jobs:
           NDK_HOME="$ANDROID_SDK_ROOT/android-ndk-r25b"
           echo "NDK_HOME=$NDK_HOME" >>$GITHUB_ENV
 
+      - name: Install Rust Target
+        run: rustup target add aarch64-linux-android
+
       - name: Clean Cargo Cache
         run: |
           cd src-tauri  # Navigate to the directory containing Cargo.toml
