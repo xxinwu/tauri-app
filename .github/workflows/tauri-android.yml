@@ -44,19 +44,19 @@ jobs:
           ANDROID_SDK_ROOT="/usr/local/lib/android/sdk"
           # Use sudo to ensure we have permission to create the directory
           sudo mkdir -p "$ANDROID_SDK_ROOT"
+          # Unzip cmdline-tools to a specific directory
+          unzip android-sdk.zip -d "$ANDROID_SDK_ROOT/cmdline-tools"
           # Set the correct path to the sdkmanager
-          SDK_MANAGER_PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
+          SDK_MANAGER_PATH="$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools/bin"
           # Add sdkmanager to PATH
-          echo "$SDK_MANAGER_PATH" | sudo tee -a /etc/profile.d/android-sdk.sh
-          source /etc/profile.d/android-sdk.sh
+          export PATH=$PATH:"$SDK_MANAGER_PATH"
           # Accept licenses
           yes | sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --licenses > /dev/null
           # Install necessary SDK components
           sdkmanager --sdk_root="$ANDROID_SDK_ROOT" "platform-tools" "platforms;android-31" "build-tools;31.0.0" > /dev/null
           # Add Android SDK tools to PATH for later steps
-          echo "$ANDROID_SDK_ROOT/platform-tools" | sudo tee -a$GITHUB_PATH
-          echo "$ANDROID_SDK_ROOT/build-tools/31.0.0" | sudo tee -a$GITHUB_PATH
-
+          echo "$ANDROID_SDK_ROOT/platform-tools" >>$GITHUB_PATH
+          echo "$ANDROID_SDK_ROOT/build-tools/31.0.0" >>$GITHUB_PATH
 
 
       - name: Build Android App
