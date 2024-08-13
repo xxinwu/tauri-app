@@ -60,6 +60,13 @@ jobs:
           cd src-tauri  # Navigate to the directory containing Cargo.toml
           cargo update -p libc
 
+
+      - name: Clean Gradle Cache
+        run: rm -rf "$HOME/.gradle/caches"
+
+      - name: Reinstall Gradle Dependencies
+        run: ./gradlew build --reinstall-all
+
       - name: Install Android SDK
         run: |
           sudo apt-get update
