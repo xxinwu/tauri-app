@@ -60,13 +60,6 @@ jobs:
           cd src-tauri  # Navigate to the directory containing Cargo.toml
           cargo update -p libc
 
-
-      - name: Clean Gradle Cache
-        run: rm -rf "$HOME/.gradle/caches"
-
-      - name: Reinstall Gradle Dependencies
-        run: ./gradlew build --reinstall-all
-
       - name: Install Android SDK
         run: |
           sudo apt-get update
@@ -91,12 +84,19 @@ jobs:
           echo "$ANDROID_SDK_ROOT/platform-tools" >>$GITHUB_PATH
           echo "$ANDROID_SDK_ROOT/build-tools/31.0.0" >>$GITHUB_PATH
 
+      - name: Create Gradle Directory
+        run: mkdir -p src-tauri/gen/android
+
+
 
       - name: Build Android App
         run: |
           # npm run tauri:build
           # If you're using pnpm instead of npm, uncomment the following line:
           pnpm run android:build
+
+      - name: Build Android App
+        run: ./gradlew build --reinstall-all
 
       - name: Cache pnpm modules
         uses: actions/cache@v3
