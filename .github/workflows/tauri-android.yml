@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Set the Node.js version you are using
+          node-version: '20'  # Set the Node.js version you are using
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -28,11 +28,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm@latest
+
       - name: Install Dependencies
         run: |
-          npm install
+          # npm install
           # If you're using pnpm instead of npm, uncomment the following line:
-          # pnpm install
+          pnpm install
 
       - name: Install Android SDK
         run: |
@@ -61,9 +65,18 @@ jobs:
 
       - name: Build Android App
         run: |
-          npm run tauri:build
+          # npm run tauri:build
           # If you're using pnpm instead of npm, uncomment the following line:
-          # pnpm run tauri:build
+          pnpm run android:build
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store/v3
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
