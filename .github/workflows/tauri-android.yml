@@ -87,7 +87,13 @@ jobs:
       - name: Create Gradle Directory
         run: mkdir -p src-tauri/gen/android
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
 
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=/home/runner/java-17" >> $GITHUB_ENV
 
       - name: Build Android App
         run: |
