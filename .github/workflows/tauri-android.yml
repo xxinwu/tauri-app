@@ -93,8 +93,8 @@ jobs:
           cache: gradle
 
 
-      - name: Set JAVA_HOME
-        run: echo "JAVA_HOME=/home/runner/java-17" >> $GITHUB_ENV
+#      - name: Set JAVA_HOME
+#        run: echo "JAVA_HOME=/home/runner/java-17" >> $GITHUB_ENV
 
       - name: Build Android App
         run: |
